@@ -15,6 +15,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'producttable'"
 		},
+		"AdvWorksDb_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AdvWorksDb'"
+		},
 		"producttable_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "somayserver007.database.windows.net"
@@ -24,6 +28,18 @@
 			"defaultValue": "datafac001"
 		},
 		"producttable_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "admin123"
+		},
+		"AdvWorksDb_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "somayserver007.database.windows.net"
+		},
+		"AdvWorksDb_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "datafac001"
+		},
+		"AdvWorksDb_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "admin123"
 		},
@@ -60,6 +76,9 @@
 					"producttable_password": {
 						"value": "[parameters('producttable_password')]"
 					},
+					"AdvWorksDb_password": {
+						"value": "[parameters('AdvWorksDb_password')]"
+					},
 					"producttable_properties_typeProperties_server": {
 						"value": "[parameters('producttable_properties_typeProperties_server')]"
 					},
@@ -68,6 +87,15 @@
 					},
 					"producttable_properties_typeProperties_userName": {
 						"value": "[parameters('producttable_properties_typeProperties_userName')]"
+					},
+					"AdvWorksDb_properties_typeProperties_server": {
+						"value": "[parameters('AdvWorksDb_properties_typeProperties_server')]"
+					},
+					"AdvWorksDb_properties_typeProperties_database": {
+						"value": "[parameters('AdvWorksDb_properties_typeProperties_database')]"
+					},
+					"AdvWorksDb_properties_typeProperties_userName": {
+						"value": "[parameters('AdvWorksDb_properties_typeProperties_userName')]"
 					}
 				}
 			},

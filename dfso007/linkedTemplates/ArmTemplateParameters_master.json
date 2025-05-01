@@ -11,6 +11,9 @@
 		"producttable_password": {
 			"value": ""
 		},
+		"AdvWorksDb_password": {
+			"value": ""
+		},
 		"producttable_properties_typeProperties_server": {
 			"value": "somayserver007.database.windows.net"
 		},
@@ -18,6 +21,15 @@
 			"value": "datafac001"
 		},
 		"producttable_properties_typeProperties_userName": {
+			"value": "admin123"
+		},
+		"AdvWorksDb_properties_typeProperties_server": {
+			"value": "somayserver007.database.windows.net"
+		},
+		"AdvWorksDb_properties_typeProperties_database": {
+			"value": "datafac001"
+		},
+		"AdvWorksDb_properties_typeProperties_userName": {
 			"value": "admin123"
 		},
 		"containerUri": {
