@@ -14,6 +14,9 @@
 		"AdvWorksDb_password": {
 			"value": ""
 		},
+		"ADLSGen2_accountKey": {
+			"value": ""
+		},
 		"producttable_properties_typeProperties_server": {
 			"value": "somayserver007.database.windows.net"
 		},
@@ -31,6 +34,9 @@
 		},
 		"AdvWorksDb_properties_typeProperties_userName": {
 			"value": "admin123"
+		},
+		"ADLSGen2_properties_typeProperties_url": {
+			"value": "https://storsomay007.dfs.core.windows.net/"
 		},
 		"containerUri": {
 			"value": ""
