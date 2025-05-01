@@ -7,6 +7,26 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "dfso007"
 		},
+		"AzureBlobStorage1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
+		},
+		"producttable_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'producttable'"
+		},
+		"producttable_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "somayserver007.database.windows.net"
+		},
+		"producttable_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "datafac001"
+		},
+		"producttable_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "admin123"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -33,6 +53,21 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"AzureBlobStorage1_connectionString": {
+						"value": "[parameters('AzureBlobStorage1_connectionString')]"
+					},
+					"producttable_password": {
+						"value": "[parameters('producttable_password')]"
+					},
+					"producttable_properties_typeProperties_server": {
+						"value": "[parameters('producttable_properties_typeProperties_server')]"
+					},
+					"producttable_properties_typeProperties_database": {
+						"value": "[parameters('producttable_properties_typeProperties_database')]"
+					},
+					"producttable_properties_typeProperties_userName": {
+						"value": "[parameters('producttable_properties_typeProperties_userName')]"
 					}
 				}
 			},
