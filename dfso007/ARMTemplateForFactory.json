@@ -401,7 +401,10 @@
 					],
 					"transformations": [
 						{
-							"name": "derivedColumn1"
+							"name": "CalculatedMarkup"
+						},
+						{
+							"name": "RemovingThumbnail"
 						}
 					],
 					"scriptLines": [
@@ -428,8 +431,28 @@
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table') ~> ProductStream",
-						"ProductStream derive(calculatedmarkup = StandardCost/ListPrice) ~> derivedColumn1",
-						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"ProductStream derive(calculatedmarkup = StandardCost/ListPrice) ~> CalculatedMarkup",
+						"CalculatedMarkup select(mapColumn(",
+						"          ProductID,",
+						"          Name,",
+						"          ProductNumber,",
+						"          Color,",
+						"          StandardCost,",
+						"          ListPrice,",
+						"          Size,",
+						"          Weight,",
+						"          ProductCategoryID,",
+						"          ProductModelID,",
+						"          SellStartDate,",
+						"          SellEndDate,",
+						"          DiscontinuedDate,",
+						"          rowguid,",
+						"          ModifiedDate,",
+						"          calculatedmarkup",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> RemovingThumbnail",
+						"RemovingThumbnail sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> sink1"
