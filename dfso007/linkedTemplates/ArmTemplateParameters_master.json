@@ -20,6 +20,9 @@
 		"TaxiTripDb_password": {
 			"value": ""
 		},
+		"azuresqldbforemp_password": {
+			"value": ""
+		},
 		"producttable_password": {
 			"value": ""
 		},
@@ -45,6 +48,15 @@
 			"value": "taxi-data"
 		},
 		"TaxiTripDb_properties_typeProperties_userName": {
+			"value": "admin123"
+		},
+		"azuresqldbforemp_properties_typeProperties_server": {
+			"value": "somayserver007.database.windows.net"
+		},
+		"azuresqldbforemp_properties_typeProperties_database": {
+			"value": "datafac001"
+		},
+		"azuresqldbforemp_properties_typeProperties_userName": {
 			"value": "admin123"
 		},
 		"producttable_properties_typeProperties_server": {
