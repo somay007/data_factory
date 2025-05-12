@@ -26,6 +26,9 @@
 		"producttable_password": {
 			"value": ""
 		},
+		"adventure database_password": {
+			"value": ""
+		},
 		"ADLSGen2_properties_typeProperties_url": {
 			"value": "https://storsomay007.dfs.core.windows.net/"
 		},
@@ -66,6 +69,15 @@
 			"value": "datafac001"
 		},
 		"producttable_properties_typeProperties_userName": {
+			"value": "admin123"
+		},
+		"adventure database_properties_typeProperties_server": {
+			"value": "somayserver007.database.windows.net"
+		},
+		"adventure database_properties_typeProperties_database": {
+			"value": "AdventureWorksDW2022"
+		},
+		"adventure database_properties_typeProperties_userName": {
 			"value": "admin123"
 		},
 		"containerUri": {

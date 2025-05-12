@@ -35,6 +35,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'producttable'"
 		},
+		"adventure database_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'adventure database'"
+		},
 		"ADLSGen2_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://storsomay007.dfs.core.windows.net/"
@@ -91,6 +95,18 @@
 			"type": "string",
 			"defaultValue": "admin123"
 		},
+		"adventure database_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "somayserver007.database.windows.net"
+		},
+		"adventure database_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "AdventureWorksDW2022"
+		},
+		"adventure database_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "admin123"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -139,6 +155,9 @@
 					"producttable_password": {
 						"value": "[parameters('producttable_password')]"
 					},
+					"adventure database_password": {
+						"value": "[parameters('adventure database_password')]"
+					},
 					"ADLSGen2_properties_typeProperties_url": {
 						"value": "[parameters('ADLSGen2_properties_typeProperties_url')]"
 					},
@@ -180,6 +199,15 @@
 					},
 					"producttable_properties_typeProperties_userName": {
 						"value": "[parameters('producttable_properties_typeProperties_userName')]"
+					},
+					"adventure database_properties_typeProperties_server": {
+						"value": "[parameters('adventure database_properties_typeProperties_server')]"
+					},
+					"adventure database_properties_typeProperties_database": {
+						"value": "[parameters('adventure database_properties_typeProperties_database')]"
+					},
+					"adventure database_properties_typeProperties_userName": {
+						"value": "[parameters('adventure database_properties_typeProperties_userName')]"
 					}
 				}
 			},
@@ -203,6 +231,26 @@
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'dfso007_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "dfso007_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'dfso007_ArmTemplate_1')]"
 			]
 		}
 	]
