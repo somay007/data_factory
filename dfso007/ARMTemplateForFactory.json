@@ -2418,6 +2418,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
+						"fileName": "lookup.csv",
 						"container": "lookup"
 					},
 					"columnDelimiter": ",",
