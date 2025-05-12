@@ -2012,7 +2012,7 @@
 								"datasetParameters": {
 									"SalesOrderStream": {},
 									"CustomerStream": {},
-									"sinkSales": {}
+									"sinklookup": {}
 								},
 								"linkedServiceParameters": {}
 							},
@@ -2060,10 +2060,10 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "LookupCsv",
+								"referenceName": "lookuppcsv",
 								"type": "DatasetReference"
 							},
-							"name": "sinkSales"
+							"name": "sinklookup"
 						}
 					],
 					"transformations": [
@@ -2155,14 +2155,14 @@
 						"SelectColumns sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> sinkSales"
+						"     skipDuplicateMapOutputs: true) ~> sinklookup"
 					]
 				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/SalesOrderHeaderTable')]",
 				"[concat(variables('factoryId'), '/datasets/SalesCustomerTable')]",
-				"[concat(variables('factoryId'), '/datasets/LookupCsv')]"
+				"[concat(variables('factoryId'), '/datasets/lookuppcsv')]"
 			]
 		},
 		{
@@ -2406,6 +2406,34 @@
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/LookupCsv')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "lookup.csv",
+						"container": "lookup"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/lookuppcsv')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
