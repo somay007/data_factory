@@ -22,10 +22,10 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "LookupCsv",
+						"referenceName": "lookuppcsv",
 						"type": "DatasetReference"
 					},
-					"name": "sinkSales"
+					"name": "sinklookup"
 				}
 			],
 			"transformations": [
@@ -117,7 +117,7 @@
 				"SelectColumns sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sinkSales"
+				"     skipDuplicateMapOutputs: true) ~> sinklookup"
 			]
 		}
 	}
