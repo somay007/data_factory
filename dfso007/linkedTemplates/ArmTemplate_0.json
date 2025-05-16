@@ -27,6 +27,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'TaxiTripDb'"
 		},
+		"adventure database_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'adventure database'"
+		},
 		"azuresqldbforemp_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'azuresqldbforemp'"
@@ -35,9 +39,13 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'producttable'"
 		},
-		"adventure database_password": {
+		"AzureDatabricks_accessToken": {
 			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'adventure database'"
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks'"
+		},
+		"AzureDatabrick_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabrick'"
 		},
 		"ADLSGen2_properties_typeProperties_url": {
 			"type": "string",
@@ -71,6 +79,18 @@
 			"type": "string",
 			"defaultValue": "admin123"
 		},
+		"adventure database_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "somayserver007.database.windows.net"
+		},
+		"adventure database_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "AdventureWorksDW2022"
+		},
+		"adventure database_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "admin123"
+		},
 		"azuresqldbforemp_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "somayserver007.database.windows.net"
@@ -95,17 +115,9 @@
 			"type": "string",
 			"defaultValue": "admin123"
 		},
-		"adventure database_properties_typeProperties_server": {
+		"AzureDatabrick_properties_typeProperties_existingClusterId": {
 			"type": "string",
-			"defaultValue": "somayserver007.database.windows.net"
-		},
-		"adventure database_properties_typeProperties_database": {
-			"type": "string",
-			"defaultValue": "AdventureWorksDW2022"
-		},
-		"adventure database_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "admin123"
+			"defaultValue": "0516-041720-t0x8912w"
 		}
 	},
 	"variables": {
@@ -236,6 +248,28 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/adventure database')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('adventure database_properties_typeProperties_server')]",
+					"database": "[parameters('adventure database_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('adventure database_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('adventure database_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/azuresqldbforemp')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -280,23 +314,45 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/adventure database')]",
+			"name": "[concat(parameters('factoryName'), '/AzureDatabricks')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Azure Databricks workspace",
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-1031302770990437.17.azuredatabricks.net",
+					"accessToken": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDatabricks_accessToken')]"
+					},
+					"newClusterNodeType": "Standard_F4",
+					"newClusterNumOfWorker": "1",
+					"newClusterSparkEnvVars": {
+						"PYSPARK_PYTHON": "/databricks/python3/bin/python3"
+					},
+					"newClusterVersion": "13.3.x-scala2.12",
+					"clusterOption": "Fixed",
+					"newClusterInitScripts": []
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDatabrick')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"type": "AzureSqlDatabase",
+				"type": "AzureDatabricks",
 				"typeProperties": {
-					"server": "[parameters('adventure database_properties_typeProperties_server')]",
-					"database": "[parameters('adventure database_properties_typeProperties_database')]",
-					"encrypt": "mandatory",
-					"trustServerCertificate": false,
-					"authenticationType": "SQL",
-					"userName": "[parameters('adventure database_properties_typeProperties_userName')]",
-					"password": {
+					"domain": "https://adb-1031302770990437.17.azuredatabricks.net",
+					"accessToken": {
 						"type": "SecureString",
-						"value": "[parameters('adventure database_password')]"
-					}
+						"value": "[parameters('AzureDatabrick_accessToken')]"
+					},
+					"existingClusterId": "[parameters('AzureDatabrick_properties_typeProperties_existingClusterId')]"
 				}
 			},
 			"dependsOn": []
@@ -568,6 +624,34 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/LookupCsv')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "lookup.csv",
+						"container": "lookup"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/MoviesDB')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -645,149 +729,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ADLSGen2')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_fje')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "inputEmp.txt",
-						"container": "adfv2tutorial"
-					},
-					"columnDelimiter": "|",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "FirstName",
-						"type": "String"
-					},
-					{
-						"name": "LastName",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/TripDataCsv')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ADLSTripData",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "TripData.csv",
-						"fileSystem": "tripdata"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ADLSTripData')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/TripDataTable')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "TaxiTripDb",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "medallion",
-						"type": "nvarchar"
-					},
-					{
-						"name": "hack_license",
-						"type": "nvarchar"
-					},
-					{
-						"name": "vendor_id",
-						"type": "nvarchar"
-					},
-					{
-						"name": "rate_code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "store_and_fwd_flag",
-						"type": "nvarchar"
-					},
-					{
-						"name": "pickup_datetime",
-						"type": "nvarchar"
-					},
-					{
-						"name": "dropoff_datetime",
-						"type": "nvarchar"
-					},
-					{
-						"name": "passenger_count",
-						"type": "nvarchar"
-					},
-					{
-						"name": "trip_time_in_secs",
-						"type": "nvarchar"
-					},
-					{
-						"name": "trip_distance",
-						"type": "nvarchar"
-					},
-					{
-						"name": "pickup_longitude",
-						"type": "nvarchar"
-					},
-					{
-						"name": "pickup_latitude",
-						"type": "nvarchar"
-					},
-					{
-						"name": "dropoff_longitude",
-						"type": "nvarchar"
-					},
-					{
-						"name": "dropoff_latitude",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "TripData"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/TaxiTripDb')]"
 			]
 		}
 	]

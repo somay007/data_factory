@@ -27,6 +27,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'TaxiTripDb'"
 		},
+		"adventure database_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'adventure database'"
+		},
 		"azuresqldbforemp_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'azuresqldbforemp'"
@@ -35,9 +39,13 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'producttable'"
 		},
-		"adventure database_password": {
+		"AzureDatabricks_accessToken": {
 			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'adventure database'"
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks'"
+		},
+		"AzureDatabrick_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabrick'"
 		},
 		"ADLSGen2_properties_typeProperties_url": {
 			"type": "string",
@@ -71,6 +79,18 @@
 			"type": "string",
 			"defaultValue": "admin123"
 		},
+		"adventure database_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "somayserver007.database.windows.net"
+		},
+		"adventure database_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "AdventureWorksDW2022"
+		},
+		"adventure database_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "admin123"
+		},
 		"azuresqldbforemp_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "somayserver007.database.windows.net"
@@ -95,17 +115,9 @@
 			"type": "string",
 			"defaultValue": "admin123"
 		},
-		"adventure database_properties_typeProperties_server": {
+		"AzureDatabrick_properties_typeProperties_existingClusterId": {
 			"type": "string",
-			"defaultValue": "somayserver007.database.windows.net"
-		},
-		"adventure database_properties_typeProperties_database": {
-			"type": "string",
-			"defaultValue": "AdventureWorksDW2022"
-		},
-		"adventure database_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "admin123"
+			"defaultValue": "0516-041720-t0x8912w"
 		},
 		"containerUri": {
 			"type": "string",
@@ -149,14 +161,20 @@
 					"TaxiTripDb_password": {
 						"value": "[parameters('TaxiTripDb_password')]"
 					},
+					"adventure database_password": {
+						"value": "[parameters('adventure database_password')]"
+					},
 					"azuresqldbforemp_password": {
 						"value": "[parameters('azuresqldbforemp_password')]"
 					},
 					"producttable_password": {
 						"value": "[parameters('producttable_password')]"
 					},
-					"adventure database_password": {
-						"value": "[parameters('adventure database_password')]"
+					"AzureDatabricks_accessToken": {
+						"value": "[parameters('AzureDatabricks_accessToken')]"
+					},
+					"AzureDatabrick_accessToken": {
+						"value": "[parameters('AzureDatabrick_accessToken')]"
 					},
 					"ADLSGen2_properties_typeProperties_url": {
 						"value": "[parameters('ADLSGen2_properties_typeProperties_url')]"
@@ -182,6 +200,15 @@
 					"TaxiTripDb_properties_typeProperties_userName": {
 						"value": "[parameters('TaxiTripDb_properties_typeProperties_userName')]"
 					},
+					"adventure database_properties_typeProperties_server": {
+						"value": "[parameters('adventure database_properties_typeProperties_server')]"
+					},
+					"adventure database_properties_typeProperties_database": {
+						"value": "[parameters('adventure database_properties_typeProperties_database')]"
+					},
+					"adventure database_properties_typeProperties_userName": {
+						"value": "[parameters('adventure database_properties_typeProperties_userName')]"
+					},
 					"azuresqldbforemp_properties_typeProperties_server": {
 						"value": "[parameters('azuresqldbforemp_properties_typeProperties_server')]"
 					},
@@ -200,14 +227,8 @@
 					"producttable_properties_typeProperties_userName": {
 						"value": "[parameters('producttable_properties_typeProperties_userName')]"
 					},
-					"adventure database_properties_typeProperties_server": {
-						"value": "[parameters('adventure database_properties_typeProperties_server')]"
-					},
-					"adventure database_properties_typeProperties_database": {
-						"value": "[parameters('adventure database_properties_typeProperties_database')]"
-					},
-					"adventure database_properties_typeProperties_userName": {
-						"value": "[parameters('adventure database_properties_typeProperties_userName')]"
+					"AzureDatabrick_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('AzureDatabrick_properties_typeProperties_existingClusterId')]"
 					}
 				}
 			},
